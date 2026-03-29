@@ -523,7 +523,8 @@ function ExpenseForm({
       }
       onSuccess();
     } catch (error) {
-      toast.error("Failed to save expense entry");
+      const msg = error instanceof Error ? error.message : String(error);
+      toast.error(`Failed to save expense entry: ${msg}`);
       console.error(error);
     }
   };

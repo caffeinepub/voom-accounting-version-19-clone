@@ -23,6 +23,10 @@ export const ExpenseCategory = IDL.Variant({
   'tollCharges' : IDL.Null,
   'diesel' : IDL.Null,
   'parkingCharges' : IDL.Null,
+  'fraud' : IDL.Null,
+  'maintenanceAndRepair' : IDL.Null,
+  'otherExpenses' : IDL.Null,
+  'purchase' : IDL.Null,
 });
 export const Time = IDL.Int;
 export const UserRole = IDL.Variant({

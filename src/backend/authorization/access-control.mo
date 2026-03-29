@@ -38,6 +38,8 @@ module {
     };
   };
 
+  // Returns the role for a caller. Returns #guest for anonymous or unregistered users
+  // instead of trapping, so query functions never fail due to missing registration.
   public func getUserRole(state : AccessControlState, caller : Principal) : UserRole {
     if (caller.isAnonymous()) {
       #guest;
@@ -45,7 +47,10 @@ module {
       switch (state.userRoles.get(caller)) {
         case (?role) { role };
         case (null) {
-          Runtime.trap("User is not registered");
+          // Not yet registered — treat as guest rather than trapping.
+          // Update functions call initialize() first so this path only
+          // applies to read-only query functions.
+          #guest;
         };
       };
     };

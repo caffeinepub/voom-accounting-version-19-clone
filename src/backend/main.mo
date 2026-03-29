@@ -216,9 +216,8 @@ actor {
   };
 
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can view profiles");
-    };
+    // Return null for unauthenticated or unregistered callers rather than trapping
+    if (caller.isAnonymous()) { return null };
     userProfiles.get(caller);
   };
 
@@ -230,6 +229,7 @@ actor {
   };
 
   public shared ({ caller }) func saveCallerUserProfile(profile : UserProfile) : async () {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can save profiles");
     };
@@ -252,6 +252,7 @@ actor {
     paymentMode : PaymentMode,
     paymentDescription : Text,
   ) : async Nat32 {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can add income entries");
     };
@@ -277,9 +278,7 @@ actor {
   };
 
   public query ({ caller }) func getIncomeEntries() : async [IncomeEntry] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can view income entries");
-    };
+    if (caller.isAnonymous()) { return [] };
 
     let isAdmin = AccessControl.isAdmin(accessControlState, caller);
     let filtered = List.empty<IncomeEntry>();
@@ -306,6 +305,7 @@ actor {
     paymentMode : PaymentMode,
     paymentDescription : Text,
   ) : async () {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can update income entries");
     };
@@ -337,6 +337,7 @@ actor {
   };
 
   public shared ({ caller }) func deleteIncomeEntry(id : Nat32) : async () {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can delete income entries");
     };
@@ -362,6 +363,7 @@ actor {
     paymentMode : PaymentMode,
     paymentDescription : Text,
   ) : async Nat32 {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can add expense entries");
     };
@@ -383,9 +385,7 @@ actor {
   };
 
   public query ({ caller }) func getExpenseEntries() : async [ExpenseEntry] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can view expense entries");
-    };
+    if (caller.isAnonymous()) { return [] };
 
     let isAdmin = AccessControl.isAdmin(accessControlState, caller);
     let filtered = List.empty<ExpenseEntry>();
@@ -408,6 +408,7 @@ actor {
     paymentMode : PaymentMode,
     paymentDescription : Text,
   ) : async () {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can update expense entries");
     };
@@ -435,6 +436,7 @@ actor {
   };
 
   public shared ({ caller }) func deleteExpenseEntry(id : Nat32) : async () {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can delete expense entries");
     };
@@ -477,6 +479,7 @@ actor {
     ratePerKm : Float,
     signature : ?Text,
   ) : async Nat32 {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can create bills");
     };
@@ -531,6 +534,7 @@ actor {
     ratePerKm : Float,
     signature : ?Text,
   ) : async () {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can update bills");
     };
@@ -564,6 +568,7 @@ actor {
   };
 
   public shared ({ caller }) func deleteBillEntry(id : Nat32) : async () {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can delete bills");
     };
@@ -837,6 +842,7 @@ actor {
     startDate : ?Time.Time,
     endDate : ?Time.Time,
   ) : async Nat32 {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can save PDF reports");
     };
@@ -1008,6 +1014,7 @@ actor {
   };
 
   public shared ({ caller }) func deletePdfReport(id : Nat32) : async () {
+    AccessControl.initialize(accessControlState, caller);
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can delete PDF reports");
     };

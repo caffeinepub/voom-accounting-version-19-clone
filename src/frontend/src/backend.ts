@@ -1320,22 +1320,8 @@ function from_candid_variant_n26(uploadFile: (file: ExternalBlob) => Promise<Uin
         dashboardQueryResult: value.dashboardQueryResult
     } : value;
 }
-function from_candid_variant_n33(uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    salary: null;
-} | {
-    cngGas: null;
-} | {
-    petrol: null;
-} | {
-    commissionVendor: null;
-} | {
-    tollCharges: null;
-} | {
-    diesel: null;
-} | {
-    parkingCharges: null;
-}): ExpenseCategory {
-    return "salary" in value ? ExpenseCategory.salary : "cngGas" in value ? ExpenseCategory.cngGas : "petrol" in value ? ExpenseCategory.petrol : "commissionVendor" in value ? ExpenseCategory.commissionVendor : "tollCharges" in value ? ExpenseCategory.tollCharges : "diesel" in value ? ExpenseCategory.diesel : "parkingCharges" in value ? ExpenseCategory.parkingCharges : value;
+function from_candid_variant_n33(uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: any): ExpenseCategory {
+    return "salary" in value ? ExpenseCategory.salary : "cngGas" in value ? ExpenseCategory.cngGas : "petrol" in value ? ExpenseCategory.petrol : "commissionVendor" in value ? ExpenseCategory.commissionVendor : "tollCharges" in value ? ExpenseCategory.tollCharges : "diesel" in value ? ExpenseCategory.diesel : "parkingCharges" in value ? ExpenseCategory.parkingCharges : "fraud" in value ? ExpenseCategory.fraud : "maintenanceAndRepair" in value ? ExpenseCategory.maintenanceAndRepair : "otherExpenses" in value ? ExpenseCategory.otherExpenses : "purchase" in value ? ExpenseCategory.purchase : value as ExpenseCategory;
 }
 function from_candid_vec_n21(uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_BillEntry>): Array<BillEntry> {
     return value.map((x)=>from_candid_BillEntry_n16(uploadFile, downloadFile, x));
@@ -1483,21 +1469,7 @@ function to_candid_variant_n42(uploadFile: (file: ExternalBlob) => Promise<Uint8
         weekly: value.weekly
     } : value;
 }
-function to_candid_variant_n5(uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: ExpenseCategory): {
-    salary: null;
-} | {
-    cngGas: null;
-} | {
-    petrol: null;
-} | {
-    commissionVendor: null;
-} | {
-    tollCharges: null;
-} | {
-    diesel: null;
-} | {
-    parkingCharges: null;
-} {
+function to_candid_variant_n5(uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: ExpenseCategory): any {
     return value == ExpenseCategory.salary ? {
         salary: null
     } : value == ExpenseCategory.cngGas ? {
@@ -1512,6 +1484,14 @@ function to_candid_variant_n5(uploadFile: (file: ExternalBlob) => Promise<Uint8A
         diesel: null
     } : value == ExpenseCategory.parkingCharges ? {
         parkingCharges: null
+    } : value == ExpenseCategory.fraud ? {
+        fraud: null
+    } : value == ExpenseCategory.maintenanceAndRepair ? {
+        maintenanceAndRepair: null
+    } : value == ExpenseCategory.otherExpenses ? {
+        otherExpenses: null
+    } : value == ExpenseCategory.purchase ? {
+        purchase: null
     } : value;
 }
 function to_candid_variant_n7(uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {

@@ -54,7 +54,11 @@ export type ExpenseCategory = { 'salary' : null } |
   { 'commissionVendor' : null } |
   { 'tollCharges' : null } |
   { 'diesel' : null } |
-  { 'parkingCharges' : null };
+  { 'parkingCharges' : null } |
+  { 'fraud' : null } |
+  { 'maintenanceAndRepair' : null } |
+  { 'otherExpenses' : null } |
+  { 'purchase' : null };
 export interface ExpenseEntry {
   'id' : number,
   'paymentDescription' : string,

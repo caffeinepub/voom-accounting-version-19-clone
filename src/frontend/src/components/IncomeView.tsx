@@ -612,7 +612,8 @@ function IncomeForm({
       }
       onSuccess();
     } catch (error) {
-      toast.error("Failed to save income entry");
+      const msg = error instanceof Error ? error.message : String(error);
+      toast.error(`Failed to save income entry: ${msg}`);
       console.error(error);
     }
   };
